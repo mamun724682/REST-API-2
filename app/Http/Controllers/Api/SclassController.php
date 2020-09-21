@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Api;
 
+use App\Model\Sclass;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
@@ -20,16 +21,6 @@ class SclassController extends Controller
     }
 
     /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
-    }
-
-    /**
      * Store a newly created resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
@@ -37,7 +28,18 @@ class SclassController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $request->validate([
+            'class_name' => 'required|unique:sclasses|max:25'
+        ]);
+
+        $data = [];
+        $data['class_name'] = $request->class_name;
+        DB::table('sclasses')->insert($data);
+        // $d = new Sclass();
+        // $d->class_name = $request->class_name;
+        // $d->save();
+
+        return response('Inserted Successfully');
     }
 
     /**
@@ -48,18 +50,8 @@ class SclassController extends Controller
      */
     public function show($id)
     {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
-    {
-        //
+        $data = DB::table('sclasses')->where('id', $id)->first();
+        return response()->json($data);
     }
 
     /**
@@ -71,7 +63,18 @@ class SclassController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $request->validate([
+            'class_name' => 'required|max:25'
+        ]);
+
+        $data = [];
+        $data['class_name'] = $request->class_name;
+        DB::table('sclasses')->where('id', $id)->update($data);
+        // $d = new Sclass();
+        // $d->class_name = $request->class_name;
+        // $d->save();
+
+        return response('Updated Successfully');
     }
 
     /**
@@ -82,6 +85,7 @@ class SclassController extends Controller
      */
     public function destroy($id)
     {
-        //
+        DB::table('sclasses')->where('id', $id)->delete();
+        return response('Deleted');
     }
 }
