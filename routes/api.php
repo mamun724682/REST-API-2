@@ -4,3 +4,4 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
 Route::apiResource('/class', 'Api\SclassController');
+Route::apiResource('/subject', 'Api\SubjectController');
