@@ -2,7 +2,7 @@
 
 ## Packages Used
 
-- 
+- JWT Auth
 
 ## Installation Instruction
 
